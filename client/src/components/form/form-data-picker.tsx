@@ -22,7 +22,7 @@ export const DatePickerField = ({
             render={({field}) => (
                 <FormItem>
                     <FormLabel
-                        className='uppercase text-xs font-bold '
+                        className='uppercase text-xs font-bold text-white'
                     >
                         {placeholder}
                     </FormLabel>
@@ -32,7 +32,7 @@ export const DatePickerField = ({
                                 <Button
                                 variant={"outline"}
                                 className={cn(
-                                    "w-full pl-3 text-left font-normal",
+                                    "w-full pl-3 text-left font-normal bg-transparent border-white text-red-600",
                                     !field.value && "text-muted-foreground"
                                 )}
                                 >
@@ -41,12 +41,13 @@ export const DatePickerField = ({
                                 ) : (
                                         <span>Pick a date</span>
                                     )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50 text-white" />
                                     </Button>
                             </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="start">
                             <Calendar
+                                className="bg-transparent"
                                 mode="single"
                                 selected={field.value}
                                 onSelect={field.onChange}

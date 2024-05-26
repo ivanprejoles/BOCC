@@ -17,7 +17,7 @@ export const InputField = ({
             render={({field}) => (
                 <FormItem>
                     <FormLabel
-                        className='uppercase text-xs font-bold '
+                        className='uppercase text-xs font-bold'
                     >
                         {placeholder}
                     </FormLabel>
@@ -30,7 +30,7 @@ export const InputField = ({
                                 {...field}
                                 type={type}
                                 maxLength={max}
-                                
+                                className="bg-transparent border-white text-white placeholder:text-slate-300"
                             />) 
                         : (
                             <Input
@@ -38,6 +38,7 @@ export const InputField = ({
                                 placeholder={placeholder}
                                 {...field}
                                 type={type}
+                                className="bg-transparent border-white text-white placeholder:text-slate-300"
                             />
                         )}
                     </FormControl>

@@ -14,13 +14,13 @@ export const SelectField = ({
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem>
+                <FormItem className="bg-transparent">
                     <FormLabel>
                         {placeholder}
                     </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoading} >
                         <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="bg-transparent border-white ">
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
                         </FormControl>

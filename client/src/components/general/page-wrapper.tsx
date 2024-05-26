@@ -8,7 +8,7 @@ const PageWrapper = ({
     children,
 }: PageWrapperProps) => {
     return (  
-        <main className="w-full h-full relative overflow-auto">
+        <main className="w-full h-auto relative">
             {children}
         </main>
     );

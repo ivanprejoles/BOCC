@@ -19,9 +19,8 @@ export const TextareaField = ({
                     </FormLabel>
                     <FormControl>
                         <Textarea
-
                             placeholder={placeholder}
-                            className="resize-y"
+                            className="resize-y bg-transparent border-white text-white placeholder:text-slate-300"
                             {...field}
                             disabled={isLoading}
                         />

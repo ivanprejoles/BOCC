@@ -23,14 +23,20 @@ import {
 } from '@/components/ui/form'
 // import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useFormModal } from '@/hooks/use-form-modal';
+
 import Input from '@mui/joy/Input';
+import { useLoginModal } from '@/hooks/use-login-modal';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import ButtonField from '../form/form-button';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, provider } from '@/firebase/firebase';
+import { InputField } from '../form/form-input';
 
 // import { addSwitcher } from '@/lib/reduxFeatures/templateslice';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { toastError, toastSuccess } from '@/lib/toast-method';
 
-const formSchema = z.object({
+const LoginFormSchema = z.object({
     name: z.string().min(2, {
         message: 'Template name is required.'
     }),
@@ -39,23 +45,23 @@ const formSchema = z.object({
 const LoginModal = () => {
     // const dispatch = useDispatch()
     // const Router = useRouter()
-    const { isOpen, onClose } = useFormModal()
+    const { isOpen, onClose } = useLoginModal()
     
-    const form = useForm({
-        resolver: zodResolver(formSchema),
+    const LoginForm = useForm({
+        resolver: zodResolver(LoginFormSchema),
         defaultValues: {
             name: '',
         }
     })
 
-    const isLoading = form.formState.isSubmitting;
-    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    const isLoadingLogin = LoginForm.formState.isSubmitting;
+    const onLoginSubmit = async (values: z.infer<typeof LoginFormSchema>) => {
         return console.log(values)
         await axios.post('/api/store', values)
         .then((response) => {
             if (response?.data && response.data?.id) {
                 // const template = response.data
-                form.reset()
+                // form.reset()
                 onClose()
                 // dispatch(addSwitcher({
                 //     key: response.data.id, value: {
@@ -64,7 +70,7 @@ const LoginModal = () => {
                 //         shareCode: template.shareCode
                 //     }
                 // }))
-                form.reset()
+                // form.reset()
                 // Router.push(`/template/${template.id}`)
                 // toastSuccess('New Store Added')
             }
@@ -75,6 +81,28 @@ const LoginModal = () => {
         })
     }
 
+    const googlePopUp = () => {
+        signInWithPopup(auth, provider)
+            .then(async (data) => {
+
+                const {
+                    email,
+                    displayName,
+                    photoURL,
+                    uid
+                } = data.user as {email: string, displayName: string, photoURL: string, uid: string}
+
+                LoginForm.setValue('email', email)
+                LoginForm.setValue('username', displayName)
+                LoginForm.setValue('googlePhotoUrl', photoURL)
+                LoginForm.setValue('id', uid)
+
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
     const handleClose = () => {
         // form.reset();
         onClose();
@@ -82,175 +110,52 @@ const LoginModal = () => {
     
     return ( 
         <Dialog open={isOpen} onOpenChange={handleClose}>
-            <DialogContent className='bg-white text-black p-0 w-full scroll overflow-y-scroll'>
+            <DialogContent className='bg-white/25 shadow-lg text-white p-0 w-full scroll overflow-y-scroll'>
                 <DialogHeader className='pt-8 px-6'>
                     <DialogTitle className='text-lg text-center font-semibold'>
-                        Add new template
+                        Account Login
                     </DialogTitle>
-                    <DialogDescription className='text-center text-[#71717a] text-sm font-normal font-mono'>
-                        Give your new template a name
+                    <DialogDescription className='text-center text-white text-sm font-normal font-mono'>
+                        Do not share your google account and password to other user and any member of the company.
                     </DialogDescription>
                 </DialogHeader>
-                <Form {...form} >
-                    <form onSubmit={form.handleSubmit(onSubmit)}
-                    className='space-y-8 h-full'
-                    >
-                        <div className="space-y-3 px-6">
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                            <FormControl>
-                                                
-                                                <Input
-                                                    disabled={isLoading}
-                                                    placeholder='Enter template name here'
-                                                    className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                            <FormControl>
-                                                
-                                                <Input
-                                                    disabled={isLoading}
-                                                    placeholder='Enter template name here'
-                                                    className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                            <FormControl>
-                                                
-                                                <Input
-                                                    disabled={isLoading}
-                                                    placeholder='Enter template name here'
-                                                    className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                        <FormControl>
-                                            
-                                            <Input
-                                                disabled={isLoading}
-                                                placeholder='Enter template name here'
-                                                className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                        <FormControl>
-                                            
-                                            <Input
-                                                disabled={isLoading}
-                                                placeholder='Enter template name here'
-                                                className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <DialogDescription className='text-[#71717a] text-sm font-normal font-mono'>
-                                            Give your new template a name
-                                        </DialogDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="name"
-                                render={({field}) => (
-                                    <FormItem>
-                                        <FormLabel
-                                            className='uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70'
-                                        >
-                                            template name
-                                        </FormLabel>
-                                        <FormControl>
-                                            
-                                            <Input
-                                                disabled={isLoading}
-                                                placeholder='Enter template name here'
-                                                className='bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0'
-                                                {...field}
-                                            />
-                                        </FormControl>
-                                        <DialogDescription className='text-[#71717a] text-sm font-normal font-mono'>
-                                            Give your new template a name
-                                        </DialogDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <DialogFooter className='bg-gray-100 px-6 py-4 gap-2'>
-                            <Button variant="default" disabled={isLoading}>
-                                Send
-                            </Button>
-                            <Button variant="default" disabled={isLoading} onClick={(e) => {e.preventDefault()}} >
-                                Reset
-                            </Button>
-                        </DialogFooter>
-                    </form>
-                </Form>
+                <Tabs defaultValue="Login" className="w-full h-full">
+                    <TabsList className="grid w-full grid-cols-1 bg-white/20 rounded-none text-white">
+                        <TabsTrigger value="Login">Account Login</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="Login">
+                        <Form {...LoginForm} >
+                            <div className="space-y-3 px-6 pb-3">
+                                <div className="grid grid-cols-1 gap-3">
+                                    <ButtonField
+                                        control={LoginForm.control}
+                                        name='email'
+                                        isLoading={isLoadingLogin}
+                                        placeholder='Email'
+                                        googlePopUp={googlePopUp}
+                                    />                                            
+                                </div>
+                                <div className="grid grid-cols-1 gap-3">
+                                    <InputField 
+                                        name='password'
+                                        control={LoginForm.control}
+                                        isLoading={isLoadingLogin}
+                                        placeholder='Password'
+                                        type='password'
+                                    />                                               
+                                </div>
+                            </div>
+                            <DialogFooter className='px-6 py-4 gap-2'>
+                                <Button variant="default" disabled={isLoadingLogin}>
+                                    Login
+                                </Button>
+                                <Button variant="default" type='button' disabled={isLoadingLogin} onClick={(e) => {e.preventDefault()}} >
+                                    Reset
+                                </Button>
+                            </DialogFooter>
+                        </Form>
+                    </TabsContent>
+                </Tabs>
             </DialogContent>
         </Dialog>
      );

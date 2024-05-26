@@ -16,12 +16,16 @@ import Sheet from '@mui/joy/Sheet';
 import Chip from '@mui/joy/Chip';
 import BubbleChartIcon from '@mui/icons-material/BubbleChart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import CallIcon from '@mui/icons-material/Call';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import PersonIcon from '@mui/icons-material/Person';
 import ListAltSharpIcon from '@mui/icons-material/ListAltSharp';
 import Tooltip from '@mui/material/Tooltip';
 import { Link } from 'react-router-dom';
 import { useFormModal } from '@/hooks/use-form-modal';
+import { HashLink } from 'react-router-hash-link';
+import { useLoginModal } from '@/hooks/use-login-modal';
+import { ModeToggle } from '../ui/mode-toggle';
 
 export default function Header() {
   const [color, setColor] = React.useState<ColorPaletteProp>('primary');
@@ -36,9 +40,10 @@ export default function Header() {
   //   const nextColorIndex = colors.indexOf(color) + 1;
   //   setColor(colors[nextColorIndex] ?? colors[0]);
   // }}
-  const {
-    onOpen
-  } = useFormModal()
+  const formModal = useFormModal()
+
+  
+  const loginModal = useLoginModal()
 
   return (
     <Sheet
@@ -67,16 +72,26 @@ export default function Header() {
         </div>
       </Link>
       <Box sx={{ flex: 1, display: 'flex', gap: 1, px: 2 }}>
-        <Button
-            // startDecorator={<PersonIcon />}
-            sx={{ display: { xs: 'none', md: 'inline-flex' } }}
-        >
-          Login
-        </Button>
+        <Link className='hidden sm:block    `' to='/announcement'>
+          <Button
+              sx={{ display: { xs: 'none', md: 'inline-flex' }, paddingX: '.5rem' }}
+          >
+            <NotificationsIcon className='mr-2' />
+            Announcement
+          </Button>
+        </Link>
+        <HashLink className='hidden sm:block' to='/#contact' smooth>
+          <Button
+              sx={{ display: { xs: 'none', md: 'inline-flex' }, paddingX: '.5rem' }}
+          >
+            <CallIcon className='mr-2' />
+            Contact Us
+          </Button>
+        </HashLink>
         <Dropdown>
           <MenuButton
             sx={{
-              '--Button-radius': '1.5rem',
+              '--Button-radius': '.25rem',
             }}
             variant="outlined"
             endDecorator={<KeyboardArrowDownIcon />}
@@ -121,23 +136,6 @@ export default function Header() {
         </Dropdown>
       </Box>
       <Box sx={{ display: 'flex', flexShrink: 0, gap: 2 }}>
-        {/* <HashLink smooth to='/#register'> */}
-          <Button
-            onClick={onOpen}
-            startDecorator={<ListAltSharpIcon />}
-            sx={{ display: {md: 'inline-flex'}}}
-          >
-            Register
-          </Button>
-        {/* </HashLink> */}
-        <Link to='/login'>
-          <Button
-            startDecorator={<PersonIcon />}
-            sx={{ display: {xs: 'none', md: 'inline-flex' } }}
-          >
-            Login
-          </Button>
-        </Link>
         <Input
           placeholder="Search"
           variant="soft"
@@ -158,7 +156,22 @@ export default function Header() {
             display: { xs: 'none', lg: 'flex' },
           }}
         />
-        <Link to='/announcement'>
+        <Button
+          onClick={formModal.onOpen}
+          startDecorator={<ListAltSharpIcon />}
+          sx={{ display: {md: 'inline-flex'}}}
+        >
+          Register
+        </Button>
+        <Button
+          onClick={loginModal.onOpen}
+          startDecorator={<PersonIcon />}
+          sx={{ display: {md: 'inline-flex' } }}
+        >
+          Login
+        </Button>
+        <ModeToggle />
+        <Link to='/announcement' className='block md:hidden'>
           <Tooltip title="Announcement">
             <Badge badgeContent={2} variant="solid" color="danger">
               <IconButton variant="soft" sx={{ borderRadius: '50%' }}>

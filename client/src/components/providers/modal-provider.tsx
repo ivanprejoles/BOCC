@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import FormModal from "@/components/modals/form-modal";
 import PostModal from "../modals/post-modal";
+import LoginModal from "../modals/login-modal";
 
 const ModalProvider = () => {
     const [isMounted, setIsMounted] = useState(false)
@@ -17,6 +18,7 @@ const ModalProvider = () => {
     return (  
         <>
             <FormModal />
+            <LoginModal />
             <PostModal />
         </>
     );

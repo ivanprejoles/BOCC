@@ -11,6 +11,7 @@
   /* Track */
 .scroll::-webkit-scrollbar-track {
     background: none;
+    width: 0px;
 }
 
 

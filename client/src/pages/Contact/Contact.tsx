@@ -1,7 +1,7 @@
-const Login = () => {
+const Contact = () => {
     return (  
         <div>as</div>
     );
 }
  
-export default Login;
+export default Contact;

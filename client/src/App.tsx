@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home/Home";
 import Announcement from "@/pages/Announcement/Announcement";
-import Login from "@/pages/Login/Login";
+import Contact from "@/pages/Contact/Contact";
 import ThemeProvider from "@/components/ui/theme-provider";
-import Layout from "./Layout";
+import Layout from "@/Layout";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="announcement" element={<Announcement />} />
-              <Route path="login" element={<Login />} />
+              <Route path="contact" element={<Contact />} />
             </Route>
         </Routes>
       </BrowserRouter>
