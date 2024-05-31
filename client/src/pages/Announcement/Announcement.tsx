@@ -24,7 +24,7 @@ const Announcement = () => {
 
     return (  
         <div className="h-full w-full overflow-hidden relative flex flex-row">
-            <div className="hidden md:block md:w-2/4 h-full sticky top-0 left-0 ">dsadsa</div>
+            <div className="hidden md:block md:w-2/4 h-full sticky top-0 left-0 "></div>
             <div className="flex-grow w-full min-h-full h-auto scroll py-4 overflow-y-auto overflow-x-hidden xl:px-20 2xl:px-40 space-y-5">
                 <p className='text-center'>Events</p>
                 <Card className='overflow-x-hidden'>
