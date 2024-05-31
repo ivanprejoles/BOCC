@@ -9,12 +9,12 @@ Backend - Server packages and API Request config
 
 ### Main Page (Employee)
 
-![Screenshot of a Main Page.](https://github.com/ivanprejoles/BOCC/assets/3d-object.png)
+![Screenshot of a Main Page.](https://github.com/ivanprejoles/BOCC/assets/mainPage.png)
 <br>
 
 ### User Page (Member)
 
-![Screenshot of a User Page.](https://github.com/ivanprejoles/BOCC/assets/3d-object.png)
+![Screenshot of a User Page.](https://github.com/ivanprejoles/BOCC/assets/clientPage.png)
 
 ## Installation
 
