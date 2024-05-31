@@ -18,4 +18,15 @@ Backend - Server packages and API Request config
 ![Screenshot of a User Page.](https://github.com/ivanprejoles/BOCC/blob/main/assets/clientPage.png)
 
 ## Installation
-
+Clients and Server Installation:
+```
+cd client
+npm install
+npm run dev
+cd ../mainClient
+npm install
+npm run dev
+cd ../server
+npm instal
+npm run dev
+```
