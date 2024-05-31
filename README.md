@@ -5,6 +5,7 @@ B.O.C.C automates online activity with manual data manipulation for members.
 ## Current Status
 <br>
 Frontend - Halfway through ( Currently making modal )
+<br>
 Backend - Server packages and API Request config
 
 ### Main Page (Employee)
